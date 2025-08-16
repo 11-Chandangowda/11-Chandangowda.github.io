@@ -1,281 +1,438 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Chandan Gowda VG | Portfolio</title>
-  <meta name="description" content="The personal portfolio of Chandan Gowda VG — projects, skills, and contact."/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Archivo+Black&display=swap" rel="stylesheet">
+  <title>Chandan Gowda VG — Portfolio</title>
+
+  <!-- SEO -->
+  <meta name="description" content="Portfolio of Chandan Gowda VG — Web Developer & Tech Enthusiast. Projects, experience, and contact." />
+  <meta name="theme-color" content="#0b0f1a" />
+  <meta property="og:title" content="Chandan Gowda VG — Portfolio" />
+  <meta property="og:description" content="Animated, modern portfolio with projects and contact." />
+  <meta property="og:type" content="website" />
+
+  <!-- Fonts (optional; remove if offline-only) -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet" />
+
   <style>
     :root{
-      /* Base palette */
-      --bg:#050611;           /* near-black */
-      --text:#e9edf7;         /* soft white */
-      --muted:#a9b0c2;
-      --card:#0b0e1f;         /* deep navy */
-      --line:rgba(255,255,255,.08);
-      --brand:#7c9cff;        /* indigo */
-      --accent:#2fe0ff;       /* cyan */
-      --accent2:#ff7ce0;      /* pink */
-      --ring:0 0 0 3px rgba(44,197,255,.35);
+      --bg:#0b0f1a;
+      --glass: rgba(255,255,255,.08);
+      --stroke: rgba(255,255,255,.15);
+      --txt:#eaf2ff;
+      --muted:#a8b3c7;
+      --accent:#7cf3ff;
+      --accent-2:#a88bff;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 18px;
+      --max: 1120px;
     }
+
     *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+    html,body{height:100%}
     body{
-      margin:0; color:var(--text); background:var(--bg); font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; line-height:1.5;
+      margin:0;
+      font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--txt);
+      background: var(--bg);
       overflow-x:hidden;
     }
-    /* ===== Hero Aurora Background ===== */
-    .bg-wrap{position:fixed; inset:0; z-index:-2; overflow:hidden}
-    .aurora{position:absolute; inset:-30% -10% -10% -10%; filter:blur(60px); transform:translateZ(0)}
-    .aurora::before, .aurora::after{
-      content:""; position:absolute; width:120vmax; height:120vmax; border-radius:50%; mix-blend-mode:screen; opacity:.6;
-      background:radial-gradient(closest-side, var(--accent), rgba(0,0,0,0) 60%);
-      animation:floatA 18s ease-in-out infinite;
+
+    /* === Cosmic Background === */
+    #bg-wrap{
+      position:fixed; inset:0; z-index:-2; overflow:hidden;
+      background: radial-gradient(1200px 800px at 20% 10%, rgba(124,243,255,.18), transparent 60%),
+                  radial-gradient(1000px 700px at 80% 20%, rgba(168,139,255,.16), transparent 60%),
+                  radial-gradient(800px 900px at 50% 110%, rgba(255,84,114,.10), transparent 60%),
+                  linear-gradient(180deg, #070a13, #0b0f1a 35%, #0b0f1a);
+      filter: saturate(1.1) contrast(1.02);
     }
-    .aurora::after{
-      background:radial-gradient(closest-side, var(--accent2), rgba(0,0,0,0) 60%);
-      animation:floatB 24s ease-in-out infinite;
+    /* Aurora ribbons */
+    .aurora{
+      position:absolute; inset:-20%; pointer-events:none; mix-blend:screen; opacity:.5;
+      background: conic-gradient(from 0deg at 50% 50%,
+        rgba(124,243,255,.0) 0%, rgba(124,243,255,.25) 8%, rgba(168,139,255,.18) 18%,
+        rgba(255,255,255,.0) 28%, rgba(124,243,255,.22) 38%, rgba(255,84,114,.12) 52%,
+        rgba(255,255,255,.0) 65%, rgba(168,139,255,.20) 78%, rgba(124,243,255,.0) 100%);
+      filter: blur(80px);
+      animation: swirl 30s linear infinite alternate;
+      transform-origin: 50% 50%;
     }
-    @keyframes floatA{0%{transform:translate(-30%, -20%) scale(1)} 50%{transform:translate(10%, 10%) scale(1.2)} 100%{transform:translate(-30%, -20%) scale(1)}}
-    @keyframes floatB{0%{transform:translate(30%, 10%) scale(1)} 50%{transform:translate(-5%, -15%) scale(1.25)} 100%{transform:translate(30%, 10%) scale(1)}}
+    .aurora:nth-child(2){ animation-duration: 38s; animation-direction: alternate-reverse; filter: blur(100px); opacity:.45 }
+    .aurora:nth-child(3){ animation-duration: 46s; transform: scale(1.2) rotate(30deg); opacity:.4 }
 
-    /* Subtle animated grid */
-    .grid-overlay{position:fixed; inset:0; z-index:-1; background:
-      linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px) 0 0/ 40px 40px,
-      linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px) 0 0/ 40px 40px;
-      mask-image:radial-gradient(ellipse at 50% 20%, rgba(0,0,0,.9), rgba(0,0,0,0) 70%);
-      animation:gridShift 30s linear infinite; opacity:.35
+    @keyframes swirl{
+      0%{ transform: rotate(0deg) scale(1) translateY(-2%) }
+      50%{ transform: rotate(180deg) scale(1.05) translateY(2%) }
+      100%{ transform: rotate(360deg) scale(1) translateY(-2%) }
     }
-    @keyframes gridShift{0%{background-position:0 0,0 0}100%{background-position:200px 0,0 200px}}
 
-    /* Floating particles (canvas) */
-    #stars{position:fixed; inset:0; z-index:-3; background:transparent}
+    /* Canvas starfield */
+    canvas#stars{
+      position:fixed; inset:0; z-index:-1; pointer-events:none;
+      filter: blur(.2px) brightness(1.1);
+    }
 
-    /* ===== Layout ===== */
-    .container{max-width:1100px; margin:0 auto; padding:0 1.1rem}
-    header{position:sticky; top:0; z-index:40; border-bottom:1px solid var(--line);
-      backdrop-filter:saturate(160%) blur(8px); background:rgba(5,6,17,.55)}
-    .nav{display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:.9rem 0}
-    .logo{display:flex; align-items:center; gap:.75rem; font-weight:800; letter-spacing:.3px}
-    .logo-badge{width:40px; height:40px; border-radius:12px; display:grid; place-items:center; font-family:"Archivo Black", system-ui; font-size:.98rem; color:#02030a; background:linear-gradient(135deg, var(--brand), var(--accent)); box-shadow:0 10px 25px rgba(44,197,255,.35)}
-    nav ul{display:flex; list-style:none; gap:.6rem; margin:0; padding:0}
-    nav a{color:var(--text); text-decoration:none; padding:.5rem .75rem; border-radius:10px}
-    nav a:hover{background:rgba(255,255,255,.06)}
-    .btn{display:inline-block; padding:.8rem 1rem; border-radius:14px; font-weight:600; border:1px solid var(--line); color:var(--text); text-decoration:none}
-    .btn.primary{background:linear-gradient(135deg, var(--brand), var(--accent)); color:#02030a; border:none}
-    .btn.ghost:hover{border-color:rgba(255,255,255,.25); background:rgba(255,255,255,.04)}
+    /* Layout */
+    .container{ width:min(100% - 28px, var(--max)); margin-inline:auto; }
+    header{
+      position:sticky; top:0; backdrop-filter: blur(10px);
+      background: linear-gradient(180deg, rgba(11,15,26,.8), rgba(11,15,26,.4));
+      border-bottom: 1px solid var(--stroke);
+      z-index: 50;
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 14px 4px;
+    }
+    .brand{ display:flex; gap:12px; align-items:center; text-decoration:none; color:var(--txt) }
+    .logo{
+      width:36px; height:36px; border-radius:10px; display:grid; place-items:center;
+      background: radial-gradient(circle at 30% 30%, var(--accent), transparent 60%),
+                  radial-gradient(circle at 70% 70%, var(--accent-2), transparent 60%), #121a2b;
+      border:1px solid var(--stroke); box-shadow: var(--shadow);
+      font-weight:800; letter-spacing:.5px;
+    }
+    nav a{
+      color:var(--muted); text-decoration:none; margin:0 10px; padding:8px 12px; border-radius:12px; border:1px solid transparent;
+    }
+    nav a:hover{ color:var(--txt); border-color:var(--stroke); background:var(--glass) }
 
-    /* ===== Hero ===== */
-    .hero{padding:5.5rem 0 3rem; text-align:center}
-    .eyebrow{display:inline-block; font-size:.85rem; color:var(--muted); border:1px solid var(--line); padding:.35rem .6rem; border-radius:999px}
-    h1{font-size:clamp(2.2rem, 5vw + .5rem, 4rem); margin:.75rem 0 .5rem; line-height:1.05; font-weight:800}
-    .grad-text{background:linear-gradient(135deg, #fff, var(--accent), var(--accent2)); -webkit-background-clip:text; background-clip:text; color:transparent}
-    .subtitle{max-width:820px; margin:0 auto 1.4rem; color:var(--muted)}
-    .cta{display:flex; gap:.75rem; justify-content:center; flex-wrap:wrap}
+    .hero{
+      padding: 72px 0 54px;
+      display:grid; gap:24px; align-items:center;
+    }
+    .hero h1{
+      margin:0; font-size: clamp(34px, 6vw, 64px); line-height:1.05; letter-spacing:.2px;
+    }
+    .hero .subtitle{
+      color:var(--muted); font-size: clamp(16px, 2.2vw, 20px);
+    }
+    .cta{ display:flex; gap:12px; flex-wrap:wrap; margin-top:6px }
+    .btn{
+      display:inline-flex; gap:10px; align-items:center; border-radius:14px;
+      border:1px solid var(--stroke); background: var(--glass);
+      padding:12px 16px; color:var(--txt); text-decoration:none; font-weight:600;
+      box-shadow: var(--shadow); transition: transform .15s ease;
+    }
+    .btn:hover{ transform: translateY(-2px) }
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(124,243,255,.25), rgba(168,139,255,.18));
+      border-color: rgba(124,243,255,.35);
+    }
 
-    /* ===== Sections ===== */
-    section{padding:3rem 0}
-    h2{font-size:1.7rem; margin:0 0 1rem; letter-spacing:.2px}
-    .card{background:rgba(6,8,20,.6); border:1px solid var(--line); border-radius:18px; padding:1.25rem; box-shadow:0 8px 30px rgba(0,0,0,.25)}
-    .grid{display:grid; gap:1rem}
-    @media(min-width:760px){.grid.cols-2{grid-template-columns:repeat(2,1fr)} .grid.cols-3{grid-template-columns:repeat(3,1fr)}}
+    section{ padding: 54px 0 }
+    .grid{
+      display:grid; gap:18px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border:1px solid var(--stroke); border-radius: var(--radius);
+      box-shadow: var(--shadow); padding:18px;
+    }
+    .card h3{ margin:6px 0 6px }
+    .muted{ color:var(--muted) }
+    .badge{
+      display:inline-block; padding:6px 10px; border-radius:999px;
+      border:1px solid var(--stroke); background: rgba(255,255,255,.05);
+      font-size:13px; margin:4px 6px 0 0
+    }
 
-    .kpis{display:flex; gap:1rem; flex-wrap:wrap}
-    .kpi{flex:1 1 180px; border:1px solid var(--line); background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); padding:1.1rem; border-radius:16px; text-align:center}
-    .kpi strong{font-size:1.6rem}
+    .project-thumb{
+      aspect-ratio: 16 / 9; border-radius:12px; overflow:hidden; border:1px solid var(--stroke);
+      background: radial-gradient(circle at 30% 30%, rgba(124,243,255,.2), transparent 60%),
+                  radial-gradient(circle at 70% 70%, rgba(168,139,255,.2), transparent 60%), #0f1524;
+      display:grid; place-items:center; font-weight:700; letter-spacing:.4px;
+      margin-bottom:12px;
+    }
 
-    .project h3{margin:.25rem 0}
-    .project p{color:var(--muted); margin:.35rem 0 .8rem}
-    .project .links{display:flex; gap:.6rem; flex-wrap:wrap}
+    /* Footer */
+    footer{
+      padding: 30px 0 60px; color:var(--muted); text-align:center;
+      border-top:1px solid var(--stroke); background: linear-gradient(180deg, rgba(11,15,26,.0), rgba(11,15,26,.4));
+    }
 
-    /* ===== Footer ===== */
-    footer{padding:2.4rem 0; color:var(--muted); border-top:1px solid var(--line)}
-    .social{display:flex; gap:.8rem; justify-content:center}
+    /* Reveal on scroll */
+    .reveal{ opacity:0; transform: translateY(16px); transition: all .7s ease; }
+    .reveal.visible{ opacity:1; transform: none }
 
-    /* Reveal animation */
-    .reveal{opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease}
-    .reveal.on{opacity:1; transform:none}
+    /* Small tweaks */
+    .inline-list{ display:flex; flex-wrap:wrap; gap:10px; padding:0; margin:8px 0; list-style:none }
+    .contact a{ color:var(--txt); text-decoration:none; border-bottom:1px dashed var(--stroke) }
+    .contact a:hover{ color:var(--accent) }
+    .credit{font-size:12px; opacity:.7}
 
-    /* Accessibility */
-    .skip-link{position:absolute; left:-1000px; top:auto; width:1px; height:1px; overflow:hidden}
-    .skip-link:focus{position:static; width:auto; height:auto; padding:.5rem; background:var(--card); border-radius:8px}
+    /* Better focus */
+    :focus-visible{ outline:2px solid var(--accent); outline-offset:2px; border-radius:10px }
   </style>
 </head>
 <body>
-  <canvas id="stars" aria-hidden="true"></canvas>
-  <div class="bg-wrap" aria-hidden="true">
+  <!-- Cosmic background layers -->
+  <div id="bg-wrap" aria-hidden="true">
+    <div class="aurora"></div>
+    <div class="aurora"></div>
     <div class="aurora"></div>
   </div>
-  <div class="grid-overlay" aria-hidden="true"></div>
+  <canvas id="stars" aria-hidden="true"></canvas>
 
-  <a class="skip-link" href="#main">Skip to content</a>
+  <!-- Header / Nav -->
   <header>
     <div class="container nav">
-      <div class="logo" aria-label="Chandan Gowda VG">
-        <div class="logo-badge">CG</div>
-        <span>Chandan Gowda VG</span>
-      </div>
-      <nav aria-label="Primary">
-        <ul>
-          <li><a href="#about">About</a></li>
-          <li><a href="#skills">Skills</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
+      <a class="brand" href="#home" aria-label="Go to top">
+        <div class="logo">CG</div>
+        <strong>Chandan&nbsp;Gowda&nbsp;VG</strong>
+      </a>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
+        <a href="#contact">Contact</a>
       </nav>
     </div>
   </header>
 
-  <main id="main" class="container">
-    <section class="hero reveal on">
-      <span class="eyebrow">Crafting fast, beautiful web experiences</span>
-      <h1>Hey, I'm <span class="grad-text">Chandan Gowda VG</span></h1>
-      <p class="subtitle">Developer • Learner • Builder. I design and code clean, accessible interfaces and performant back‑ends. Scroll to see selected work and how I can help you ship faster.</p>
+  <!-- Hero -->
+  <main id="home" class="container">
+    <section class="hero">
+      <h1>Building sleek web experiences<br/>with performance & polish.</h1>
+      <p class="subtitle">I’m <strong>Chandan Gowda VG</strong> — a developer who loves crafting fast, elegant websites and data‑driven apps. Let’s turn ideas into beautiful, reliable products.</p>
       <div class="cta">
-        <a class="btn primary" href="#projects">See Projects</a>
-        <a class="btn ghost" href="./Chandan-Gowda-VG-Resume.pdf" download>Download Résumé</a>
+        <a class="btn primary" href="#projects">🚀 View Projects</a>
+        <a class="btn" href="Chandan-Gowda-VG-Resume.pdf" download>📄 Download Resume</a>
+        <a class="btn" href="#contact">✉️ Contact</a>
       </div>
     </section>
 
+    <!-- About -->
     <section id="about" class="reveal">
-      <h2>About</h2>
-      <div class="card">
-        <p>I'm <strong>Chandan Gowda VG</strong>, an engineer who loves building delightful products. I focus on modern JavaScript, semantic HTML/CSS, APIs, and performance. When not coding, I explore new tech and read.</p>
-        <div class="kpis" aria-label="Key facts">
-          <div class="kpi"><strong>10+</strong><br><span class="muted">Projects</span></div>
-          <div class="kpi"><strong>4 hrs/day</strong><br><span class="muted">Learning habit</span></div>
-          <div class="kpi"><strong>100%</strong><br><span class="muted">Ownership</span></div>
-        </div>
+      <div class="grid">
+        <article class="card">
+          <h3>About Me</h3>
+          <p class="muted">
+            Web developer & tech enthusiast based in India. I enjoy building clean UIs, optimizing performance, and shipping features that matter.
+            Beyond code, I love badminton, trekking, and learning new tech.
+          </p>
+          <ul class="inline-list">
+            <li class="badge">Frontend</li>
+            <li class="badge">Full‑stack</li>
+            <li class="badge">WordPress + SEO</li>
+            <li class="badge">Data & ML basics</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>Highlights</h3>
+          <ul class="muted">
+            <li>Built responsive business sites (contact forms, email, blogs, SEO).</li>
+            <li>Hands‑on with performance tuning and technical SEO.</li>
+            <li>Comfortable with MS SQL, T‑SQL, C#/.NET basics, and Python.</li>
+            <li>Strong focus on accessibility and maintainability.</li>
+          </ul>
+        </article>
       </div>
     </section>
 
+    <!-- Skills -->
     <section id="skills" class="reveal">
       <h2>Skills</h2>
-      <div class="grid cols-3">
-        <div class="card"><strong>Frontend</strong><br><span class="muted">HTML, CSS, JavaScript, React</span></div>
-        <div class="card"><strong>Backend</strong><br><span class="muted">Node.js, Express, REST APIs</span></div>
-        <div class="card"><strong>Data & Tools</strong><br><span class="muted">Git/GitHub, SQL, VS Code, Postman</span></div>
+      <div class="grid">
+        <article class="card">
+          <h3>Frontend</h3>
+          <p class="muted">HTML5, CSS3, JS (ES6+), Responsive UI, Accessibility, Animations</p>
+          <ul class="inline-list">
+            <li class="badge">Vanilla JS</li><li class="badge">SPA basics</li><li class="badge">GSAP-like anim</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>Backend</h3>
+          <p class="muted">Node.js, Express basics, ASP.NET (C#), REST APIs</p>
+          <ul class="inline-list">
+            <li class="badge">Auth</li><li class="badge">CRUD</li><li class="badge">Email</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>Data & Tools</h3>
+          <p class="muted">Python, MS SQL Server, T‑SQL, Git/GitHub, cPanel, WordPress & Elementor</p>
+          <ul class="inline-list">
+            <li class="badge">DB Design</li><li class="badge">ETL basics</li><li class="badge">SEO/Analytics</li>
+          </ul>
+        </article>
       </div>
     </section>
 
+    <!-- Projects -->
     <section id="projects" class="reveal">
-      <h2>Selected Projects</h2>
-      <div class="grid cols-2">
-        <article class="card project">
-          <span class="eyebrow">Featured</span>
-          <h3>Smart RF Shielding Enclosure (Concept)</h3>
-          <p>End‑to‑end idea with IoT monitoring and analytics dashboard; designed for reliability and UX clarity.</p>
-          <div class="links">
-            <a class="btn" href="#" target="_blank" rel="noopener">Case Study</a>
-            <a class="btn" href="#" target="_blank" rel="noopener">Prototype</a>
+      <h2>Featured Projects</h2>
+      <div class="grid">
+        <article class="card">
+          <div class="project-thumb">Smart RF Shielding (Concept)</div>
+          <h3>Smart RF Shielding Enclosure — IoT Monitoring</h3>
+          <p class="muted">Concept + plan for an IoT‑enabled RF shielding enclosure with live environment sensing and dashboarding.</p>
+          <div class="cta">
+            <a class="btn" href="#" aria-disabled="true">Demo</a>
+            <a class="btn" href="#" aria-disabled="true">Source</a>
           </div>
         </article>
-        <article class="card project">
-          <h3>Customer Churn Prediction</h3>
-          <p>ML pipeline and clean visualizations to understand churn drivers and improve retention.</p>
-          <div class="links">
-            <a class="btn" href="#" target="_blank" rel="noopener">Report</a>
-            <a class="btn" href="#" target="_blank" rel="noopener">GitHub</a>
+
+        <article class="card">
+          <div class="project-thumb">Drowsiness Detection</div>
+          <h3>Drowsiness Detection (ML)</h3>
+          <p class="muted">Computer‑vision pipeline to detect driver drowsiness using facial landmarks and alerting.</p>
+          <div class="cta">
+            <a class="btn" href="#" aria-disabled="true">Case Study</a>
+            <a class="btn" href="#" aria-disabled="true">GitHub</a>
           </div>
         </article>
-        <article class="card project">
-          <h3>Portfolio Template</h3>
-          <p>This page! Single‑file, blazing fast, and easy to customize.</p>
-          <div class="links"><a class="btn" href="#">You're here</a></div>
-        </article>
-        <article class="card project">
-          <h3>Drowsiness Detection</h3>
-          <p>Computer‑vision prototype to detect driver drowsiness and alert in real‑time.</p>
-          <div class="links">
-            <a class="btn" href="#" target="_blank" rel="noopener">Demo</a>
-            <a class="btn" href="#" target="_blank" rel="noopener">Source</a>
+
+        <article class="card">
+          <div class="project-thumb">Business Website</div>
+          <h3>Business Website — Full Stack</h3>
+          <p class="muted">Responsive site with services, blog, contact form (email notifications), and basic SEO.</p>
+          <div class="cta">
+            <a class="btn" href="#" aria-disabled="true">Live</a>
+            <a class="btn" href="#" aria-disabled="true">Repo</a>
           </div>
         </article>
       </div>
     </section>
 
+    <!-- Experience -->
+    <section id="experience" class="reveal">
+      <h2>Experience</h2>
+      <div class="grid">
+        <article class="card">
+          <h3>Web Developer (Freelance)</h3>
+          <p class="muted">Designed and developed landing pages, corporate sites, and dashboards with a focus on speed, SEO, and clean UX.</p>
+          <ul class="inline-list">
+            <li class="badge">Performance 90+ Lighthouse</li>
+            <li class="badge">Responsive</li>
+            <li class="badge">SEO Ready</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>Tech Projects & Learning</h3>
+          <p class="muted">Python, ASP.NET, SQL Server, JS fundamentals, and practical ML projects.</p>
+          <ul class="inline-list">
+            <li class="badge">.NET</li>
+            <li class="badge">MS SQL</li>
+            <li class="badge">Python</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Contact -->
     <section id="contact" class="reveal">
       <h2>Contact</h2>
-      <div class="card">
-        <p>Have an idea or role in mind? Let's talk.</p>
-        <p>
-          <a class="btn primary" href="mailto:vgchandangowda@gmail.com">Email Me</a>
-          <a class="btn" href="tel:+916361771662">Call</a>
-          <a class="btn" href="https://www.linkedin.com/in/chandan-gowda-vg-a76875265" target="_blank" rel="noopener">LinkedIn</a>
-          <a class="btn" href="https://github.com/your-username" target="_blank" rel="noopener">GitHub</a>
-        </p>
+      <div class="grid">
+        <article class="card contact">
+          <h3>Let’s build something together</h3>
+          <p class="muted">Email: <a href="mailto:chandan@example.com">chandan@example.com</a><br/>
+             Phone: <a href="tel:+91XXXXXXXXXX">+91-XXXXXXXXXX</a></p>
+          <p class="muted">
+            <a href="https://www.linkedin.com/in/chandan-gowda-vg-a76875265" target="_blank" rel="noopener">LinkedIn</a> ·
+            <a href="https://github.com/your-github" target="_blank" rel="noopener">GitHub</a> ·
+            <a href="https://your-website.com" target="_blank" rel="noopener">Website</a>
+          </p>
+          <form onsubmit="sendMail(event)">
+            <label>Name<br/><input required name="name" type="text" placeholder="Your name" /></label><br/>
+            <label>Email<br/><input required name="email" type="email" placeholder="you@example.com" /></label><br/>
+            <label>Message<br/><textarea required name="message" rows="4" placeholder="Tell me about your project"></textarea></label><br/>
+            <button class="btn primary" type="submit">Send Message</button>
+            <small class="muted" id="formNote"></small>
+          </form>
+        </article>
+
+        <article class="card">
+          <h3>Location & Availability</h3>
+          <p class="muted">📍 India · Open to freelance & full‑time opportunities.<br/>
+          Avg. response time: 24 hours.</p>
+        </article>
       </div>
     </section>
   </main>
 
-  <footer>
+  <footer class="reveal">
     <div class="container">
-      <div class="social" aria-label="Social links">
-        <a href="https://www.linkedin.com/in/chandan-gowda-vg-a76875265" target="_blank" rel="noopener">LinkedIn</a>
-        <span>·</span>
-        <a href="mailto:vgchandangowda@gmail.com">Email</a>
-      </div>
-      <p style="text-align:center; margin-top:1rem">© <span id="year"></span> Chandan Gowda VG • Built with pure HTML, CSS & JS</p>
+      <p>© <span id="year"></span> Chandan Gowda VG. All rights reserved.</p>
+      <p class="credit">Built with vanilla HTML/CSS/JS • Aurora + starfield background • Accessible & responsive</p>
     </div>
   </footer>
 
   <script>
-    // Footer year
+    // Year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // IntersectionObserver reveal
+    // Smooth reveal
     const io = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('on') })
-    }, {threshold:.1});
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target);} });
+    }, {threshold:.12});
     document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-    // Particles / stars
-    const c = document.getElementById('stars');
-    const ctx = c.getContext('2d');
-    let w, h, dpr = Math.min(window.devicePixelRatio || 1, 2);
-    const stars = []; const N = 140; // number of particles
-
-    function resize(){ w = c.width = innerWidth * dpr; h = c.height = innerHeight * dpr; c.style.width = innerWidth+'px'; c.style.height = innerHeight+'px'; }
-    resize(); addEventListener('resize', resize);
-
-    function rand(a,b){return Math.random()*(b-a)+a}
-    for(let i=0;i<N;i++){
-      stars.push({
-        x: rand(0,w), y: rand(0,h), r: rand(0.5, 1.8)*dpr,
-        vx: rand(-0.15,0.15), vy: rand(-0.15,0.15), alpha: rand(0.4,1)
-      })
+    // Lightweight "send" handler (no backend) — replace with your email service
+    function sendMail(e){
+      e.preventDefault();
+      const note = document.getElementById('formNote');
+      note.textContent = "Thanks! This demo form doesn't send without a backend. Connect EmailJS, Formspree, or your API.";
+      setTimeout(()=> note.textContent = '', 6000);
+      e.target.reset();
     }
-    function step(){
-      ctx.clearRect(0,0,w,h);
-      // draw
-      for(const s of stars){
-        s.x += s.vx; s.y += s.vy;
-        if(s.x<0||s.x>w) s.vx*=-1; if(s.y<0||s.y>h) s.vy*=-1;
-        ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
-        const g = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.r*3);
-        g.addColorStop(0, `rgba(255,255,255,${0.8*s.alpha})`);
-        g.addColorStop(1, 'rgba(255,255,255,0)');
-        ctx.fillStyle = g; ctx.fill();
+
+    // === Starfield Canvas ===
+    (function(){
+      const c = document.getElementById('stars');
+      const ctx = c.getContext('2d');
+      let w,h,pxRatio, stars=[], COUNT=180;
+      function resize(){
+        pxRatio = Math.min(window.devicePixelRatio || 1, 2);
+        w = c.width = Math.floor(innerWidth * pxRatio);
+        h = c.height = Math.floor(innerHeight * pxRatio);
+        c.style.width = innerWidth + 'px';
+        c.style.height = innerHeight + 'px';
+        if(stars.length===0) init();
       }
-      // faint connecting lines
-      for(let i=0;i<N;i++){
-        for(let j=i+1;j<i+12 && j<N;j++){
-          const a = stars[i], b = stars[j];
-          const dx=a.x-b.x, dy=a.y-b.y; const dist = Math.hypot(dx,dy);
-          if(dist < 120*dpr){
-            ctx.globalAlpha = (1 - dist/(120*dpr)) * .12;
-            ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y);
-            ctx.strokeStyle = '#cfe3ff'; ctx.lineWidth = 1 * dpr; ctx.stroke();
-            ctx.globalAlpha = 1;
+      function init(){
+        stars = new Array(COUNT).fill().map(()=> ({
+          x: Math.random()*w,
+          y: Math.random()*h,
+          z: Math.random()*0.7 + 0.3,
+          vx: (Math.random()-0.5)*0.06,
+          vy: (Math.random()-0.5)*0.06,
+          tw: Math.random()*360
+        }));
+      }
+      function step(){
+        ctx.clearRect(0,0,w,h);
+        for(const s of stars){
+          s.x += s.vx; s.y += s.vy; s.tw += 0.6;
+          if(s.x < 0) s.x = w; if(s.x > w) s.x = 0;
+          if(s.y < 0) s.y = h; if(s.y > h) s.y = 0;
+          const r = (s.z*1.4 + (Math.sin(s.tw*Math.PI/180)+1)/5) * pxRatio;
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, r, 0, Math.PI*2);
+          ctx.fillStyle = `rgba(200, 230, 255, ${0.55*s.z})`;
+          ctx.fill();
+        }
+        // subtle constellation lines
+        for(let i=0;i<stars.length;i++){
+          for(let j=i+1;j<i+6 && j<stars.length;j++){
+            const a = stars[i], b = stars[j];
+            const dx = a.x-b.x, dy=a.y-b.y, dist = Math.hypot(dx,dy);
+            if(dist < 90*pxRatio){
+              ctx.strokeStyle = 'rgba(172, 200, 255, .06)';
+              ctx.lineWidth = .6*pxRatio; ctx.beginPath();
+              ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+            }
           }
         }
+        requestAnimationFrame(step);
       }
+      resize(); addEventListener('resize', resize, {passive:true});
       requestAnimationFrame(step);
-    }
-    step();
+    })();
   </script>
 </body>
 </html>
