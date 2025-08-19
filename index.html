@@ -1,164 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Chandan Gowda VG | Portfolio</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chandan Gowda VG — Portfolio</title>
   <style>
-    /* Reset & Base */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Segoe UI', Tahoma, sans-serif;
-      color: #fff;
-      background: linear-gradient(270deg, #6a11cb, #2575fc, #ff6a00);
-      background-size: 600% 600%;
-      animation: bgAnimation 20s ease infinite;
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    @keyframes bgAnimation {
-      0% {background-position: 0% 50%;}
-      50% {background-position: 100% 50%;}
-      100% {background-position: 0% 50%;}
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    /* Aurora + Stars background */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: radial-gradient(circle at 20% 20%, #0ff, transparent 60%),
+                  radial-gradient(circle at 80% 80%, #f0f, transparent 60%),
+                  radial-gradient(circle at 50% 50%, #00f, transparent 70%);
+      background-blend-mode: screen;
+      z-index: -2;
+      animation: aurora 20s infinite alternate ease-in-out;
+    }
+
+    @keyframes aurora {
+      0% { filter: hue-rotate(0deg); }
+      100% { filter: hue-rotate(360deg); }
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 200%; height: 200%;
+      background: transparent url("https://www.transparenttextures.com/patterns/stardust.png") repeat;
+      background-size: cover;
+      animation: stars 100s linear infinite;
+      z-index: -1;
+      opacity: 0.4;
+    }
+
+    @keyframes stars {
+      0% { transform: translate(0,0); }
+      100% { transform: translate(-500px, -500px); }
     }
 
     header {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
       text-align: center;
-      padding: 0 20px;
+      padding: 80px 20px 40px;
     }
-    header h1 {
-      font-size: 3.5rem;
-      margin-bottom: 0.5rem;
-    }
-    header p {
-      font-size: 1.3rem;
-      margin-bottom: 2rem;
-    }
-    nav {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      background: rgba(0,0,0,0.5);
-      backdrop-filter: blur(6px);
-      z-index: 100;
-    }
-    nav a {
-      color: #fff;
-      padding: 1rem;
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-    nav a:hover { color: #ffd700; }
 
+    header h1 {
+      font-size: 3rem;
+      font-weight: bold;
+      text-shadow: 0 0 20px rgba(255,255,255,0.6);
+    }
+
+    header p {
+      font-size: 1.2rem;
+      margin-top: 10px;
+      opacity: 0.9;
+    }
+
+    /* Glassmorphism card sections */
     section {
-      padding: 80px 20px;
-      max-width: 1000px;
-      margin: auto;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 30px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      animation: fadeUp 1.5s ease;
     }
+
     section h2 {
-      font-size: 2.2rem;
-      margin-bottom: 20px;
-      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 15px;
+      border-bottom: 2px solid rgba(255,255,255,0.3);
+      padding-bottom: 8px;
     }
-    .card {
-      background: rgba(255,255,255,0.1);
-      border-radius: 15px;
-      padding: 20px;
-      margin: 15px 0;
-      transition: transform 0.3s, background 0.3s;
+
+    section p, section li {
+      font-size: 1rem;
+      line-height: 1.6;
     }
-    .card:hover {
-      transform: translateY(-8px);
-      background: rgba(255,255,255,0.2);
+
+    ul {
+      list-style: none;
+      padding-left: 15px;
     }
+
+    li::before {
+      content: "✦";
+      margin-right: 8px;
+      color: #0ff;
+    }
+
+    /* Fade-up effect */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     footer {
       text-align: center;
-      padding: 20px;
-      background: rgba(0,0,0,0.5);
+      padding: 30px;
+      font-size: 0.9rem;
+      opacity: 0.8;
     }
-    a.btn {
-      display: inline-block;
-      padding: 10px 20px;
-      border-radius: 30px;
-      background: #ffd700;
-      color: #000;
+
+    a {
+      color: #0ff;
       text-decoration: none;
-      margin-top: 15px;
-      transition: transform 0.3s;
     }
-    a.btn:hover { transform: scale(1.05); }
+
+    a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
-  <nav>
-    <a href="#about">About</a>
-    <a href="#skills">Skills</a>
-    <a href="#projects">Projects</a>
-    <a href="#contact">Contact</a>
-  </nav>
-
   <header>
     <h1>Chandan Gowda VG</h1>
-    <p>Web Developer • Tech Enthusiast • Innovator</p>
-    <a href="#projects" class="btn">See My Work</a>
+    <p>Web Developer • Tech Enthusiast • Problem Solver</p>
   </header>
 
-  <section id="about">
+  <section>
     <h2>About Me</h2>
-    <div class="card">
-      <p>
-        I am Chandan Gowda VG, a passionate web developer and technology enthusiast. 
-        I love creating impactful digital solutions, exploring new technologies, and 
-        constantly improving my skills. My goal is to build professional, innovative, 
-        and user-friendly applications that make a difference.
-      </p>
-    </div>
+    <p>Hello! I'm Chandan Gowda VG, passionate about building modern web solutions and exploring innovative technologies. I enjoy creating user-friendly, visually stunning projects that make a real impact.</p>
   </section>
 
-  <section id="skills">
+  <section>
     <h2>Skills</h2>
-    <div class="card">
-      <p><strong>Languages:</strong> HTML, CSS, JavaScript, Python, C#</p>
-      <p><strong>Frameworks:</strong> Node.js, ASP.NET</p>
-      <p><strong>Databases:</strong> SQL Server, MySQL</p>
-      <p><strong>Tools:</strong> Git, WordPress, SEO Optimization</p>
-    </div>
+    <ul>
+      <li>HTML, CSS, JavaScript</li>
+      <li>Python, Machine Learning</li>
+      <li>ASP.NET, C#, SQL Server</li>
+      <li>WordPress, SEO, Cloud Basics</li>
+    </ul>
   </section>
 
-  <section id="projects">
+  <section>
     <h2>Projects</h2>
-    <div class="card">
-      <h3>Liveon Biolabs Website</h3>
-      <p>Developed a complete end-to-end business website for Liveon Biolabs, including design, staging, SEO, and deployment.</p>
-      <a href="https://staging.liveonbiolabs.com" target="_blank" class="btn">Visit Website</a>
-    </div>
-    <div class="card">
-      <h3>Drowsiness Detection</h3>
-      <p>A machine learning project to detect driver drowsiness using real-time video input and alert mechanisms.</p>
-    </div>
-    <div class="card">
-      <h3>Customer Churn Prediction</h3>
-      <p>Analyzed customer data and built predictive models to identify churn risks, helping businesses retain customers.</p>
-    </div>
+    <ul>
+      <li>Drowsiness Detection using Machine Learning</li>
+      <li>Customer Churn Prediction</li>
+      <li>Cloud-Based Intrusion Detection Approach</li>
+      <li>Personal Portfolio Website</li>
+    </ul>
   </section>
 
-  <section id="contact">
-    <h2>Contact Me</h2>
-    <div class="card" style="text-align:center;">
-      <p>Email: <a href="mailto:gowdachandan735@gmail.com">gowdachandan735@gmail.com</a></p>
-      <p>Phone: <a href="tel:+919663356434">+91 96633 56434</a></p>
-      <a href="https://www.linkedin.com/in/chandan-gowda-vg-a76875265" target="_blank" class="btn">LinkedIn</a>
-      <a href="resume.pdf" target="_blank" class="btn">View Resume</a>
-    </div>
+  <section>
+    <h2>Contact</h2>
+    <p>Email: <a href="mailto:chandangowdavg@gmail.com">chandangowdavg@gmail.com</a></p>
+    <p>LinkedIn: <a href="https://www.linkedin.com/in/chandan-gowda-vg-a76875265" target="_blank">linkedin.com/in/chandan-gowda-vg</a></p>
+    <p>GitHub: <a href="https://github.com/" target="_blank">github.com</a></p>
   </section>
 
   <footer>
-    <p>© 2025 Chandan Gowda VG | All Rights Reserved</p>
+    © 2025 Chandan Gowda VG — All Rights Reserved
   </footer>
 </body>
 </html>
