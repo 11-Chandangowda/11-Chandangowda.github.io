@@ -145,15 +145,44 @@
 
   <!-- Hero -->
   <section class="hero">
-    <span class="eyebrow">Crafting fast, beautiful web experiences</span>
-    <h1>Hey, I'm <span class="grad-text">Chandan Gowda VG</span></h1>
-    <p class="subtitle">Developer • Learner • Builder. I design and code clean, accessible interfaces and performant back-ends.</p>
-    <div class="cta">
-      <a class="btn primary" href="#projects">See Projects</a>
-      <a class="btn" href="./Chandan-Gowda-VG-Resume.pdf" download>Download Résumé</a>
-    </div>
-  </section>
+  <span class="eyebrow">Crafting fast, beautiful web experiences</span>
+  <h1>Hey, I'm <span class="grad-text">Chandan Gowda VG</span></h1>
+  <p class="subtitle">Developer • Learner • Builder. I design and code clean, accessible interfaces and performant back-ends.</p>
+  <div class="cta">
+    <a class="btn primary" href="#projects">See Projects</a>
+    <a class="btn resume-btn" href="./Chandan-Gowda-VG-Resume.pdf" download>Download Résumé</a>
+  </div>
+</section>
 
+<style>
+  .btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+
+  .btn.primary {
+    background: var(--brand);
+    color: white;
+  }
+
+  .btn.primary:hover {
+    background: #0056b3; /* darker shade on hover */
+  }
+
+  .btn.resume-btn {
+    background: transparent;
+    color: var(--brand);
+    border: 2px solid var(--brand);
+  }
+
+  .btn.resume-btn:hover {
+    background: var(--brand);
+    color: white;
+  }
+</style>
   <!-- About -->
   <section id="about" style="text-align: center; padding: 40px 20px;">
   <h2>About Me</h2>
