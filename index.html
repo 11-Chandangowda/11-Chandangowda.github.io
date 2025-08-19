@@ -1,132 +1,438 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chandan Gowda VG | Portfolio</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Chandan Gowda VG — Portfolio</title>
+
+  <!-- SEO -->
+  <meta name="description" content="Portfolio of Chandan Gowda VG — Web Developer & Tech Enthusiast. Projects, experience, and contact." />
+  <meta name="theme-color" content="#0b0f1a" />
+  <meta property="og:title" content="Chandan Gowda VG — Portfolio" />
+  <meta property="og:description" content="Animated, modern portfolio with projects and contact." />
+  <meta property="og:type" content="website" />
+
+  <!-- Fonts (optional; remove if offline-only) -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet" />
+
   <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f4f4f9;
-      color: #333;
-      line-height: 1.6;
-      text-align: center;
+    :root{
+      --bg:#0b0f1a;
+      --glass: rgba(255,255,255,.08);
+      --stroke: rgba(255,255,255,.15);
+      --txt:#eaf2ff;
+      --muted:#a8b3c7;
+      --accent:#7cf3ff;
+      --accent-2:#a88bff;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 18px;
+      --max: 1120px;
     }
-    header {
-      background: #0077ff;
-      color: #fff;
-      padding: 20px 0;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--txt);
+      background: var(--bg);
+      overflow-x:hidden;
     }
-    header h1 {
-      margin: 10px 0;
+
+    /* === Cosmic Background === */
+    #bg-wrap{
+      position:fixed; inset:0; z-index:-2; overflow:hidden;
+      background: radial-gradient(1200px 800px at 20% 10%, rgba(124,243,255,.18), transparent 60%),
+                  radial-gradient(1000px 700px at 80% 20%, rgba(168,139,255,.16), transparent 60%),
+                  radial-gradient(800px 900px at 50% 110%, rgba(255,84,114,.10), transparent 60%),
+                  linear-gradient(180deg, #070a13, #0b0f1a 35%, #0b0f1a);
+      filter: saturate(1.1) contrast(1.02);
     }
-    nav a {
-      margin: 0 15px;
-      color: #fff;
-      text-decoration: none;
-      font-weight: bold;
+    /* Aurora ribbons */
+    .aurora{
+      position:absolute; inset:-20%; pointer-events:none; mix-blend:screen; opacity:.5;
+      background: conic-gradient(from 0deg at 50% 50%,
+        rgba(124,243,255,.0) 0%, rgba(124,243,255,.25) 8%, rgba(168,139,255,.18) 18%,
+        rgba(255,255,255,.0) 28%, rgba(124,243,255,.22) 38%, rgba(255,84,114,.12) 52%,
+        rgba(255,255,255,.0) 65%, rgba(168,139,255,.20) 78%, rgba(124,243,255,.0) 100%);
+      filter: blur(80px);
+      animation: swirl 30s linear infinite alternate;
+      transform-origin: 50% 50%;
     }
-    nav a:hover {
-      text-decoration: underline;
+    .aurora:nth-child(2){ animation-duration: 38s; animation-direction: alternate-reverse; filter: blur(100px); opacity:.45 }
+    .aurora:nth-child(3){ animation-duration: 46s; transform: scale(1.2) rotate(30deg); opacity:.4 }
+
+    @keyframes swirl{
+      0%{ transform: rotate(0deg) scale(1) translateY(-2%) }
+      50%{ transform: rotate(180deg) scale(1.05) translateY(2%) }
+      100%{ transform: rotate(360deg) scale(1) translateY(-2%) }
     }
-    section {
-      padding: 50px 20px;
-      max-width: 900px;
-      margin: auto;
+
+    /* Canvas starfield */
+    canvas#stars{
+      position:fixed; inset:0; z-index:-1; pointer-events:none;
+      filter: blur(.2px) brightness(1.1);
     }
-    #profile-pic {
-      width: 200px;
-      height: 200px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 5px solid #0077ff;
-      transition: transform 0.3s ease;
+
+    /* Layout */
+    .container{ width:min(100% - 28px, var(--max)); margin-inline:auto; }
+    header{
+      position:sticky; top:0; backdrop-filter: blur(10px);
+      background: linear-gradient(180deg, rgba(11,15,26,.8), rgba(11,15,26,.4));
+      border-bottom: 1px solid var(--stroke);
+      z-index: 50;
     }
-    #profile-pic:hover {
-      transform: scale(1.1);
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 14px 4px;
     }
-    .skills, .projects {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
+    .brand{ display:flex; gap:12px; align-items:center; text-decoration:none; color:var(--txt) }
+    .logo{
+      width:36px; height:36px; border-radius:10px; display:grid; place-items:center;
+      background: radial-gradient(circle at 30% 30%, var(--accent), transparent 60%),
+                  radial-gradient(circle at 70% 70%, var(--accent-2), transparent 60%), #121a2b;
+      border:1px solid var(--stroke); box-shadow: var(--shadow);
+      font-weight:800; letter-spacing:.5px;
     }
-    .card {
-      background: #fff;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      transition: transform 0.3s;
+    nav a{
+      color:var(--muted); text-decoration:none; margin:0 10px; padding:8px 12px; border-radius:12px; border:1px solid transparent;
     }
-    .card:hover {
-      transform: translateY(-5px);
+    nav a:hover{ color:var(--txt); border-color:var(--stroke); background:var(--glass) }
+
+    .hero{
+      padding: 72px 0 54px;
+      display:grid; gap:24px; align-items:center;
     }
-    footer {
-      background: #333;
-      color: #fff;
-      padding: 20px;
-      margin-top: 40px;
+    .hero h1{
+      margin:0; font-size: clamp(34px, 6vw, 64px); line-height:1.05; letter-spacing:.2px;
     }
+    .hero .subtitle{
+      color:var(--muted); font-size: clamp(16px, 2.2vw, 20px);
+    }
+    .cta{ display:flex; gap:12px; flex-wrap:wrap; margin-top:6px }
+    .btn{
+      display:inline-flex; gap:10px; align-items:center; border-radius:14px;
+      border:1px solid var(--stroke); background: var(--glass);
+      padding:12px 16px; color:var(--txt); text-decoration:none; font-weight:600;
+      box-shadow: var(--shadow); transition: transform .15s ease;
+    }
+    .btn:hover{ transform: translateY(-2px) }
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(124,243,255,.25), rgba(168,139,255,.18));
+      border-color: rgba(124,243,255,.35);
+    }
+
+    section{ padding: 54px 0 }
+    .grid{
+      display:grid; gap:18px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border:1px solid var(--stroke); border-radius: var(--radius);
+      box-shadow: var(--shadow); padding:18px;
+    }
+    .card h3{ margin:6px 0 6px }
+    .muted{ color:var(--muted) }
+    .badge{
+      display:inline-block; padding:6px 10px; border-radius:999px;
+      border:1px solid var(--stroke); background: rgba(255,255,255,.05);
+      font-size:13px; margin:4px 6px 0 0
+    }
+
+    .project-thumb{
+      aspect-ratio: 16 / 9; border-radius:12px; overflow:hidden; border:1px solid var(--stroke);
+      background: radial-gradient(circle at 30% 30%, rgba(124,243,255,.2), transparent 60%),
+                  radial-gradient(circle at 70% 70%, rgba(168,139,255,.2), transparent 60%), #0f1524;
+      display:grid; place-items:center; font-weight:700; letter-spacing:.4px;
+      margin-bottom:12px;
+    }
+
+    /* Footer */
+    footer{
+      padding: 30px 0 60px; color:var(--muted); text-align:center;
+      border-top:1px solid var(--stroke); background: linear-gradient(180deg, rgba(11,15,26,.0), rgba(11,15,26,.4));
+    }
+
+    /* Reveal on scroll */
+    .reveal{ opacity:0; transform: translateY(16px); transition: all .7s ease; }
+    .reveal.visible{ opacity:1; transform: none }
+
+    /* Small tweaks */
+    .inline-list{ display:flex; flex-wrap:wrap; gap:10px; padding:0; margin:8px 0; list-style:none }
+    .contact a{ color:var(--txt); text-decoration:none; border-bottom:1px dashed var(--stroke) }
+    .contact a:hover{ color:var(--accent) }
+    .credit{font-size:12px; opacity:.7}
+
+    /* Better focus */
+    :focus-visible{ outline:2px solid var(--accent); outline-offset:2px; border-radius:10px }
   </style>
 </head>
 <body>
+  <!-- Cosmic background layers -->
+  <div id="bg-wrap" aria-hidden="true">
+    <div class="aurora"></div>
+    <div class="aurora"></div>
+    <div class="aurora"></div>
+  </div>
+  <canvas id="stars" aria-hidden="true"></canvas>
+
+  <!-- Header / Nav -->
   <header>
-    <h1>Chandan Gowda</h1>
-    <p>Computer Science Engineer | Aspiring Cloud Engineer</p>
-    <nav>
-      <a href="#about">About</a>
-      <a href="#skills">Skills</a>
-      <a href="#projects">Projects</a>
-      <a href="#contact">Contact</a>
-    </nav>
+    <div class="container nav">
+      <a class="brand" href="#home" aria-label="Go to top">
+        <div class="logo">CG</div>
+        <strong>Chandan&nbsp;Gowda&nbsp;VG</strong>
+      </a>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
   </header>
 
-  <section id="about">
-    <h2>About Me</h2>
-    <img id="profile-pic" src="myphoto.jpg" alt="Chandan Gowda">
-    <p>Hi, I’m Chandan 👋, a Computer Science Engineering student passionate about cloud computing, web development, and machine learning. I love building projects and continuously learning new technologies.</p>
-  </section>
+  <!-- Hero -->
+  <main id="home" class="container">
+    <section class="hero">
+      <h1>Building sleek web experiences<br/>with performance & polish.</h1>
+      <p class="subtitle">I’m <strong>Chandan Gowda VG</strong> — a developer who loves crafting fast, elegant websites and data‑driven apps. Let’s turn ideas into beautiful, reliable products.</p>
+      <div class="cta">
+        <a class="btn primary" href="#projects">🚀 View Projects</a>
+        <a class="btn" href="Chandan-Gowda-VG-Resume.pdf" download>📄 Download Resume</a>
+        <a class="btn" href="#contact">✉️ Contact</a>
+      </div>
+    </section>
 
-  <section id="skills">
-    <h2>Skills</h2>
-    <div class="skills">
-      <div class="card">Python</div>
-      <div class="card">JavaScript</div>
-      <div class="card">Node.js</div>
-      <div class="card">SQL Server</div>
-      <div class="card">AWS Cloud</div>
-      <div class="card">Machine Learning</div>
+    <!-- About -->
+    <section id="about" class="reveal">
+      <div class="grid">
+        <article class="card">
+          <h3>About Me</h3>
+          <p class="muted">
+            Web developer & tech enthusiast based in India. I enjoy building clean UIs, optimizing performance, and shipping features that matter.
+            Beyond code, I love badminton, trekking, and learning new tech.
+          </p>
+          <ul class="inline-list">
+            <li class="badge">Frontend</li>
+            <li class="badge">Full‑stack</li>
+            <li class="badge">WordPress + SEO</li>
+            <li class="badge">Data & ML basics</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>Highlights</h3>
+          <ul class="muted">
+            <li>Built responsive business sites (contact forms, email, blogs, SEO).</li>
+            <li>Hands‑on with performance tuning and technical SEO.</li>
+            <li>Comfortable with MS SQL, T‑SQL, C#/.NET basics, and Python.</li>
+            <li>Strong focus on accessibility and maintainability.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills" class="reveal">
+      <h2>Skills</h2>
+      <div class="grid">
+        <article class="card">
+          <h3>Frontend</h3>
+          <p class="muted">HTML5, CSS3, JS (ES6+), Responsive UI, Accessibility, Animations</p>
+          <ul class="inline-list">
+            <li class="badge">Vanilla JS</li><li class="badge">SPA basics</li><li class="badge">GSAP-like anim</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>Backend</h3>
+          <p class="muted">Node.js, Express basics, ASP.NET (C#), REST APIs</p>
+          <ul class="inline-list">
+            <li class="badge">Auth</li><li class="badge">CRUD</li><li class="badge">Email</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>Data & Tools</h3>
+          <p class="muted">Python, MS SQL Server, T‑SQL, Git/GitHub, cPanel, WordPress & Elementor</p>
+          <ul class="inline-list">
+            <li class="badge">DB Design</li><li class="badge">ETL basics</li><li class="badge">SEO/Analytics</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="reveal">
+      <h2>Featured Projects</h2>
+      <div class="grid">
+        <article class="card">
+          <div class="project-thumb">Smart RF Shielding (Concept)</div>
+          <h3>Smart RF Shielding Enclosure — IoT Monitoring</h3>
+          <p class="muted">Concept + plan for an IoT‑enabled RF shielding enclosure with live environment sensing and dashboarding.</p>
+          <div class="cta">
+            <a class="btn" href="#" aria-disabled="true">Demo</a>
+            <a class="btn" href="#" aria-disabled="true">Source</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="project-thumb">Drowsiness Detection</div>
+          <h3>Drowsiness Detection (ML)</h3>
+          <p class="muted">Computer‑vision pipeline to detect driver drowsiness using facial landmarks and alerting.</p>
+          <div class="cta">
+            <a class="btn" href="#" aria-disabled="true">Case Study</a>
+            <a class="btn" href="#" aria-disabled="true">GitHub</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="project-thumb">Business Website</div>
+          <h3>Business Website — Full Stack</h3>
+          <p class="muted">Responsive site with services, blog, contact form (email notifications), and basic SEO.</p>
+          <div class="cta">
+            <a class="btn" href="#" aria-disabled="true">Live</a>
+            <a class="btn" href="#" aria-disabled="true">Repo</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Experience -->
+    <section id="experience" class="reveal">
+      <h2>Experience</h2>
+      <div class="grid">
+        <article class="card">
+          <h3>Web Developer (Freelance)</h3>
+          <p class="muted">Designed and developed landing pages, corporate sites, and dashboards with a focus on speed, SEO, and clean UX.</p>
+          <ul class="inline-list">
+            <li class="badge">Performance 90+ Lighthouse</li>
+            <li class="badge">Responsive</li>
+            <li class="badge">SEO Ready</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>Tech Projects & Learning</h3>
+          <p class="muted">Python, ASP.NET, SQL Server, JS fundamentals, and practical ML projects.</p>
+          <ul class="inline-list">
+            <li class="badge">.NET</li>
+            <li class="badge">MS SQL</li>
+            <li class="badge">Python</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="reveal">
+      <h2>Contact</h2>
+      <div class="grid">
+        <article class="card contact">
+          <h3>Let’s build something together</h3>
+          <p class="muted">Email: <a href="mailto:chandan@example.com">chandan@example.com</a><br/>
+             Phone: <a href="tel:+91XXXXXXXXXX">+91-XXXXXXXXXX</a></p>
+          <p class="muted">
+            <a href="https://www.linkedin.com/in/chandan-gowda-vg-a76875265" target="_blank" rel="noopener">LinkedIn</a> ·
+            <a href="https://github.com/your-github" target="_blank" rel="noopener">GitHub</a> ·
+            <a href="https://your-website.com" target="_blank" rel="noopener">Website</a>
+          </p>
+          <form onsubmit="sendMail(event)">
+            <label>Name<br/><input required name="name" type="text" placeholder="Your name" /></label><br/>
+            <label>Email<br/><input required name="email" type="email" placeholder="you@example.com" /></label><br/>
+            <label>Message<br/><textarea required name="message" rows="4" placeholder="Tell me about your project"></textarea></label><br/>
+            <button class="btn primary" type="submit">Send Message</button>
+            <small class="muted" id="formNote"></small>
+          </form>
+        </article>
+
+        <article class="card">
+          <h3>Location & Availability</h3>
+          <p class="muted">📍 India · Open to freelance & full‑time opportunities.<br/>
+          Avg. response time: 24 hours.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="reveal">
+    <div class="container">
+      <p>© <span id="year"></span> Chandan Gowda VG. All rights reserved.</p>
+      <p class="credit">Built with vanilla HTML/CSS/JS • Aurora + starfield background • Accessible & responsive</p>
     </div>
-  </section>
-
-  <section id="projects">
-    <h2>Projects</h2>
-    <div class="projects">
-      <div class="card">
-        <h3>Drowsiness Detection</h3>
-        <p>A machine learning project to detect driver drowsiness using real-time webcam input.</p>
-      </div>
-      <div class="card">
-        <h3>Customer Churn Prediction</h3>
-        <p>Built a predictive model to analyze customer retention patterns.</p>
-      </div>
-      <div class="card">
-        <h3>Portfolio Website</h3>
-        <p>Created my personal portfolio from scratch using HTML, CSS, and GitHub Pages.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="contact">
-    <h2>Contact</h2>
-    <p>Email: <a href="mailto:chandangowda@example.com">vgchandangowda@gmail.com</a></p>
-    <p>LinkedIn: <a href="https://www.linkedin.com/in/chandan-gowda-vg-a76875265" target="_blank">View Profile</a></p>
-    <p>GitHub: <a href="https://github.com/11-chandangowda" target="_blank">11-chandangowda</a></p>
-  </section>
-
-  <footer>
-    <p>© 2025 Chandan Gowda VG| All Rights Reserved</p>
   </footer>
+
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Smooth reveal
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target);} });
+    }, {threshold:.12});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+    // Lightweight "send" handler (no backend) — replace with your email service
+    function sendMail(e){
+      e.preventDefault();
+      const note = document.getElementById('formNote');
+      note.textContent = "Thanks! This demo form doesn't send without a backend. Connect EmailJS, Formspree, or your API.";
+      setTimeout(()=> note.textContent = '', 6000);
+      e.target.reset();
+    }
+
+    // === Starfield Canvas ===
+    (function(){
+      const c = document.getElementById('stars');
+      const ctx = c.getContext('2d');
+      let w,h,pxRatio, stars=[], COUNT=180;
+      function resize(){
+        pxRatio = Math.min(window.devicePixelRatio || 1, 2);
+        w = c.width = Math.floor(innerWidth * pxRatio);
+        h = c.height = Math.floor(innerHeight * pxRatio);
+        c.style.width = innerWidth + 'px';
+        c.style.height = innerHeight + 'px';
+        if(stars.length===0) init();
+      }
+      function init(){
+        stars = new Array(COUNT).fill().map(()=> ({
+          x: Math.random()*w,
+          y: Math.random()*h,
+          z: Math.random()*0.7 + 0.3,
+          vx: (Math.random()-0.5)*0.06,
+          vy: (Math.random()-0.5)*0.06,
+          tw: Math.random()*360
+        }));
+      }
+      function step(){
+        ctx.clearRect(0,0,w,h);
+        for(const s of stars){
+          s.x += s.vx; s.y += s.vy; s.tw += 0.6;
+          if(s.x < 0) s.x = w; if(s.x > w) s.x = 0;
+          if(s.y < 0) s.y = h; if(s.y > h) s.y = 0;
+          const r = (s.z*1.4 + (Math.sin(s.tw*Math.PI/180)+1)/5) * pxRatio;
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, r, 0, Math.PI*2);
+          ctx.fillStyle = `rgba(200, 230, 255, ${0.55*s.z})`;
+          ctx.fill();
+        }
+        // subtle constellation lines
+        for(let i=0;i<stars.length;i++){
+          for(let j=i+1;j<i+6 && j<stars.length;j++){
+            const a = stars[i], b = stars[j];
+            const dx = a.x-b.x, dy=a.y-b.y, dist = Math.hypot(dx,dy);
+            if(dist < 90*pxRatio){
+              ctx.strokeStyle = 'rgba(172, 200, 255, .06)';
+              ctx.lineWidth = .6*pxRatio; ctx.beginPath();
+              ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+            }
+          }
+        }
+        requestAnimationFrame(step);
+      }
+      resize(); addEventListener('resize', resize, {passive:true});
+      requestAnimationFrame(step);
+    })();
+  </script>
 </body>
-</html>                                
+</html>
